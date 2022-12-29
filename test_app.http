@@ -1,0 +1,30 @@
+###
+# Get home page response
+
+GET http://127.0.0.1:8000/
+Accept: text/json
+
+###
+# Get all values from DB
+
+GET http://127.0.0.1:8000/bot/TOKEN/info
+Accept: text/json
+
+###
+# Delete all values from DB
+
+GET http://127.0.0.1:8000/bot/5804822411:TOKEN/clear
+Accept: text/json
+
+###
+# Add new values for DB
+
+POST http://127.0.0.1:8000/bot/5804822411:TOKEN/post
+Content-Type: application/json
+
+{
+  "user_id": 123456789,
+  "name": "Artem",
+  "date": "15:00 - 29.12.2022",
+  "text": "Remind me"
+}
