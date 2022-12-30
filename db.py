@@ -94,6 +94,7 @@ class MongoDB:
                     text = values.get('text')
                     user_id = values.get('user_id')
                     self.collection.delete_one({'_id': _id})
+                    print(user_id, name, text)
                     return user_id, name, text
         else:
             return
