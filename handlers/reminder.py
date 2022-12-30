@@ -10,8 +10,8 @@ from aiogram.utils.callback_data import CallbackData
 
 from buttons import user_kb, cancel_kb, choice_kb
 from calendars import SimpleCalendar, simple_calendar_callback
-from config import bot
-from config import reminder_bot_db
+from bot_config import bot
+from bot_config import reminder_bot_db
 
 
 class FSMAdmin(StatesGroup):

@@ -1,7 +1,6 @@
 import logging
 import uuid
 from datetime import datetime, timedelta
-from pathlib import Path
 
 import pymongo
 from pymongo.errors import DuplicateKeyError
@@ -10,14 +9,6 @@ from pymongo.errors import DuplicateKeyError
 class MongoDB:
     def __init__(self, collection):
         self.collection = collection
-        logs_folder = Path('../logs')
-        logs_folder.mkdir() if not logs_folder.exists() else None
-
-        logging.basicConfig(filename=f'../logs/parser.log',
-                            level=logging.DEBUG,
-                            format='[%(asctime)s] %(levelname)s - %(message)s',
-                            datefmt='%H:%M:%S',
-                            encoding='utf-8')
 
     def insert_one_value(self, user_id, name, date, text):
         """Insert reminder into DB
@@ -88,7 +79,7 @@ class MongoDB:
     def send_remind(self):
         """Send text remind from DB
 
-        :return: user id, user name, text
+        :return: user id, user name, text/None
         """
         if self.collection.count_documents({}) != 0:
             query = {}
@@ -104,3 +95,5 @@ class MongoDB:
                     user_id = values.get('user_id')
                     self.collection.delete_one({'_id': _id})
                     return user_id, name, text
+        else:
+            return

@@ -5,7 +5,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 
 from buttons import url_inline_kb, user_kb
-from config import bot
+from bot_config import bot
 
 
 async def send_url(message: types.Message, state=FSMContext):

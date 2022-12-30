@@ -13,13 +13,13 @@ Accept: text/json
 ###
 # Delete all values from DB
 
-GET http://127.0.0.1:8000/bot/5804822411:TOKEN/clear
+GET http://127.0.0.1:8000/bot/TOKEN/clear
 Accept: text/json
 
 ###
 # Add new values for DB
 
-POST http://127.0.0.1:8000/bot/5804822411:TOKEN/post
+POST http://127.0.0.1:8000/bot/TOKEN/post
 Content-Type: application/json
 
 {

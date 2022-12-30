@@ -6,8 +6,8 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from starlette import status
 
-from config import dp, bot, TOKEN
-from config import reminder_bot_db
+from bot_config import dp, bot, TOKEN
+from bot_config import reminder_bot_db
 from handlers import bug_report, reminder, other
 from schedule import scheduler
 
