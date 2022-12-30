@@ -1,23 +1,61 @@
 import asyncio
+import logging
 import os
 
 from aiogram import types, Dispatcher, Bot
+from aiogram.types import BotCommand
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from starlette import status
 
-from config import dp, bot, TOKEN
-from config import reminder_bot_db
+from bot_config import dp, bot, TOKEN, logger, config
+from bot_config import reminder_bot_db
 from handlers import bug_report, reminder, other
 from schedule import scheduler
 
 app = FastAPI()
 WEBHOOK_PATH = f"/bot/{TOKEN}"
-WEBHOOK_URL = os.getenv('HOST_URL') + WEBHOOK_PATH
+WEBHOOK_URL = config.tg_bot.HOST_URL + WEBHOOK_PATH
+
+
+async def set_commands(bot_: Bot):
+    """Set commands for bot
+
+    :param bot_: Bot class instance
+    :return:
+    """
+    commands = [
+        BotCommand(command='/start', description='Начало работы'),
+        BotCommand(command='/cancel', description='Отмена')
+    ]
+
+    await bot_.set_my_commands(commands)
+
+
+async def bot_main():
+    """Applies all bot settings
+
+    :return:
+    """
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s'
+    )
+    logger.info('Starting bot')
+
+    bug_report(dp)
+    other(dp)
+    reminder(dp)
+
+    await set_commands(bot)
 
 
 @app.on_event("startup")
 async def on_startup():
+    """Setting up a webhook
+
+    :return:
+    """
     webhook_info = await bot.get_webhook_info()
     if webhook_info.url != WEBHOOK_URL:
         await bot.set_webhook(
@@ -29,7 +67,7 @@ async def on_startup():
 
 @app.post(WEBHOOK_PATH)
 async def bot_webhook(update: dict):
-    """Setting up a webhook
+    """Getting Telegram updates
 
     :param update: Telegram update
     :return:
@@ -37,14 +75,16 @@ async def bot_webhook(update: dict):
     telegram_update = types.Update(**update)
     Dispatcher.set_current(dp)
     Bot.set_current(bot)
-    bug_report(dp)
-    reminder(dp)
-    other(dp)
+    await bot_main()
     await dp.process_update(telegram_update)
 
 
 @app.on_event("shutdown")
 async def on_shutdown():
+    """Closing session and delete webhook
+
+    :return:
+    """
     await bot.session.close()
     await bot.delete_webhook()
 

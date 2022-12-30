@@ -7,7 +7,7 @@ from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
 from buttons import cancel_kb
-from config import bot
+from bot_config import bot
 
 
 class Report(StatesGroup):
