@@ -7,12 +7,17 @@ from config import reminder_bot_db
 
 
 async def send_reminder():
-    all_info = reminder_bot_db.send_remind()
-    user_id = all_info[0]
-    name = all_info[1]
-    text = all_info[2]
+    """Send reminder
 
-    await config.bot.send_message(user_id, f'{name}, напоминаю:\n\n{text}')
+    :return:
+    """
+    if reminder_bot_db.send_remind():
+        all_info = reminder_bot_db.send_remind()
+        user_id = all_info[0]
+        name = all_info[1]
+        text = all_info[2]
+
+        await config.bot.send_message(user_id, f'{name}, напоминаю:\n\n{text}')
 
 
 async def scheduler():
