@@ -7,6 +7,7 @@ class TgBot:
     BOT_TOKEN: str
     HOST_URL: str
     MONGO_DB_URL: str
+    ADMIN_ID: int
 
 
 @dataclass
@@ -25,6 +26,6 @@ def load_config(path: str):
             BOT_TOKEN=settings["BOT_TOKEN"],
             HOST_URL=settings["HOST_URL"],
             MONGO_DB_URL=settings["MONGO_DB_URL"],
+            ADMIN_ID=int(settings["ADMIN_ID"]),
         )
-
     )

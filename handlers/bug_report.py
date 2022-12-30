@@ -7,7 +7,7 @@ from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
 from buttons import cancel_kb
-from bot_config import bot
+from bot_config import bot, config
 
 
 class Report(StatesGroup):
@@ -30,7 +30,7 @@ async def start_mess(message: types.Message):
 
 
 async def choice(message: types.Message, state=FSMContext):
-    await bot.send_message(os.getenv('ADMIN_ID'), message.text)
+    await bot.send_message(config.tg_bot.ADMIN_ID, message.text)
     await message.reply('Спасибо за ваш отчет, мы рассмотрим ваше обращение в ближайшее время',
                         reply_markup=types.ReplyKeyboardRemove())
     await state.finish()
