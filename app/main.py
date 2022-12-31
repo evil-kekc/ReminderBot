@@ -1,6 +1,5 @@
 import asyncio
 import logging
-import os
 
 from aiogram import types, Dispatcher, Bot
 from aiogram.types import BotCommand
@@ -26,7 +25,9 @@ async def set_commands(bot_: Bot):
     """
     commands = [
         BotCommand(command='/start', description='Начало работы'),
-        BotCommand(command='/cancel', description='Отмена')
+        BotCommand(command='/cancel', description='Отмена'),
+        BotCommand(command='/get_code', description='Исходный код бота'),
+        BotCommand(command='/bug_report', description='Отправить сообщение об ошибке'),
     ]
 
     await bot_.set_my_commands(commands)
