@@ -1,17 +1,16 @@
-import logging
 from datetime import datetime
 
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import StatesGroup, State
-from aiogram.types import CallbackQuery, ReplyKeyboardRemove
+from aiogram.types import CallbackQuery
 from aiogram.utils.callback_data import CallbackData
 
-from buttons import user_kb, cancel_kb, choice_kb
-from calendars import SimpleCalendar, simple_calendar_callback
 from bot_config import bot
 from bot_config import reminder_bot_db
+from buttons import user_kb, cancel_kb, choice_kb
+from calendars import SimpleCalendar, simple_calendar_callback
 
 
 class FSMAdmin(StatesGroup):

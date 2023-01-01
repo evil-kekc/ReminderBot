@@ -157,7 +157,7 @@ async def add_remind(remind: dict):
     if response[1] == status.HTTP_200_OK:
         return JSONResponse(
             content=response[2],
-            status_code=status.HTTP_200_OK,
+            status_code=status.HTTP_201_CREATED,
             media_type='application/json'
         )
     else:
