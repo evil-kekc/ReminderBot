@@ -9,11 +9,12 @@ from bot_config import reminder_bot_db
 async def send_reminder():
     all_info = reminder_bot_db.send_remind()
     if all_info is not None:
-        user_id = int(all_info[0])
-        name = all_info[1]
-        text = all_info[2]
+        for remind in all_info:
+            user_id = int(remind[0])
+            name = remind[1]
+            text = remind[2]
 
-        await bot.send_message(user_id, f'{name}, напоминаю:\n\n{text}')
+            await bot.send_message(user_id, f'{name}, напоминаю:\n\n{text}')
 
 
 async def scheduler():

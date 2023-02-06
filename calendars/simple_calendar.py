@@ -102,8 +102,7 @@ class SimpleCalendar:
 
         :param query: callback_query, as provided by the CallbackQueryHandler
         :param data: callback_data, dictionary, set by calendar_callback
-        :return: Returns a tuple (Boolean,datetime), indicating if a date is selected
-                    and returning the date if so.
+        :return: Returns a tuple (Boolean,datetime), indicating if a date is selected and returning the date if so.
         """
 
         return_data = (False, None)
