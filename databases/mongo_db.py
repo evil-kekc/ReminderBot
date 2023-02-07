@@ -5,6 +5,10 @@ from datetime import datetime, timedelta
 import pymongo
 from pymongo.errors import DuplicateKeyError
 
+from config import load_config
+
+config = load_config(r'config/config.ini')
+
 
 class MongoDB:
     def __init__(self, collection):
@@ -84,7 +88,8 @@ class MongoDB:
         if self.collection.count_documents({}) != 0:
             query = {}
             for values in self.collection.find(query, {'_id': 1, 'date': 1, 'text': 1, 'user_id': 1, 'name': 1}):
-                now_date = datetime.now() + timedelta(hours=3)
+                time_direction = config.tg_bot.TIME_DIRECTION
+                now_date = datetime.now() + timedelta(hours=time_direction)
                 now_date = now_date.strftime('%H:%M - %d.%m.%Y')
 
                 date = values.get('date')

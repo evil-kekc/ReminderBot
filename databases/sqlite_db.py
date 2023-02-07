@@ -1,13 +1,17 @@
 import logging
 import sqlite3
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Union
+
+from config import load_config
+
+config = load_config(r'config/config.ini')
 
 
 class SQLiteDB:
     def __init__(self):
-        self.con = sqlite3.connect('test.db')
+        self.con = sqlite3.connect(r'databases/users.db')
         self.cursor = self.con.cursor()
         self._create_table_users()
 
@@ -115,8 +119,10 @@ class SQLiteDB:
         :return: user id, user name, text/None
         """
         with self.con:
-            now = datetime.now().strftime('%H:%M - %d.%m.%Y')
-            result = self.cursor.execute("SELECT * FROM users WHERE date = ?", (now,))
+            time_direction = config.tg_bot.TIME_DIRECTION
+            now = datetime.now() + timedelta(hours=time_direction)
+            now_date = now.strftime('%H:%M - %d.%m.%Y')
+            result = self.cursor.execute("SELECT * FROM users WHERE date = ?", (now_date,))
 
             all_data = result.fetchall()
             if all_data:
