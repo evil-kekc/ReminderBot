@@ -30,7 +30,7 @@ git clone https://github.com/evil-kekc/ReminderBot
 2. Create and activate virtual environment
 
   ```sh
-  python -m virtualenv venv
+  python -m venv venv
   cd venv/Scripts
   activate.bat
   ```
@@ -41,6 +41,8 @@ git clone https://github.com/evil-kekc/ReminderBot
 * **HOST_URL** - Domain link (if you are using ngrok eg: https://e0d1-151-249-164-76.eu.ngrok.io)
 * **MONGO_DB_URL** - Link to connect MongoDB
 * **ADMIN_ID** - ID of the admin who will have access to the bug reports analysis
+* **DB** - Database to be used in the project (SQLite_DB / MONGO_DB)
+* **TIMEDELTA** - Time difference (in hours) with server
 
 Example:
 
@@ -49,6 +51,8 @@ BOT_TOKEN = 123456789:QWERTYUIOPASDFGHJKLZXCVBNM
 HOST_URL = https://example.com
 MONGO_DB_URL = mongodb+srv://username:password@cluster.jmezdsn.mongodb.net/?retryWrites\\\=true&w\\\=majority
 ADMIN_ID = 123456789
+DB = SQLite_DB
+TIMEDELTA = 3
 ```
 
 4. Run [ngrok.exe](config/ngrok.exe) to start the server (making the HTTP port of our application available) and write
