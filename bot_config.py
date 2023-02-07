@@ -6,7 +6,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import Dispatcher
 
 from config import load_config
-from db import MongoDB
+from databases.mongo_db import MongoDB
 
 storage = MemoryStorage()
 
