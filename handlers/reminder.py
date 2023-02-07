@@ -27,13 +27,13 @@ async def start_mess(message: types.Message):
                            reply_markup=user_kb)
 
 
-async def send_calendar(message: types.Message, state=FSMContext):
+async def send_calendar(message: types.Message, state: FSMContext):
     await message.answer(f'Выбери дату напоминания', reply_markup=await SimpleCalendar().start_calendar())
     await message.answer('Для отмены, нажмите отмена внизу экрана', reply_markup=cancel_kb)
     await state.set_state(FSMAdmin.send_info.state)
 
 
-async def send_question(callback_query: CallbackQuery, callback_data: CallbackData, state=FSMContext):
+async def send_question(callback_query: CallbackQuery, callback_data: CallbackData, state: FSMContext):
     selected, date = await SimpleCalendar().process_selection(callback_query, callback_data)
 
     now_date = datetime.now().date()
@@ -57,7 +57,7 @@ async def send_question(callback_query: CallbackQuery, callback_data: CallbackDa
         return
 
 
-async def get_info(message: types.Message, state=FSMContext):
+async def get_info(message: types.Message, state: FSMContext):
     try:
         if message.text == 'Отмена':
             await state.finish()
@@ -89,7 +89,7 @@ async def get_info(message: types.Message, state=FSMContext):
         await FSMAdmin.get_date.set()
 
 
-async def get_text(message: types.Message, state=FSMContext):
+async def get_text(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['text'] = message.text
 
@@ -102,7 +102,7 @@ async def get_text(message: types.Message, state=FSMContext):
     await FSMAdmin.finish.set()
 
 
-async def save_info(message: types.Message, state=FSMContext):
+async def save_info(message: types.Message, state: FSMContext):
     data = await state.get_data()
     date = data.get('all_date')
     text = data.get('text')

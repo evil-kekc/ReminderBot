@@ -4,16 +4,16 @@ from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 
-from buttons import url_inline_kb, user_kb
 from bot_config import bot
+from buttons import url_inline_kb, user_kb
 
 
-async def send_url(message: types.Message, state=FSMContext):
+async def send_url(message: types.Message):
     await bot.send_message(message.from_user.id, 'Код бота можете посмотреть на GitHub',
                            reply_markup=url_inline_kb)
 
 
-async def cancel(message: types.Message, state=FSMContext):
+async def cancel(message: types.Message, state: FSMContext):
     current_state = await state.get_state()
     if current_state is None:
         return

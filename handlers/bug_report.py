@@ -22,7 +22,7 @@ class Report(StatesGroup):
 call_back_info = CallbackData('report_answer', 'user_id')
 
 
-async def cancel(message: types.Message, state=FSMContext):
+async def cancel(message: types.Message, state: FSMContext):
     current_state = await state.get_state()
     if current_state is None:
         return
@@ -37,7 +37,7 @@ async def start_mess(message: types.Message):
     await Report.send_report.set()
 
 
-async def choice(message: types.Message, state=FSMContext):
+async def choice(message: types.Message, state: FSMContext):
     send_report_answer = InlineKeyboardMarkup(resize_keyboard=True).add(
         InlineKeyboardButton(text='Ответить', callback_data=call_back_info.new(user_id=message.from_user.id)))
 
@@ -49,7 +49,7 @@ async def choice(message: types.Message, state=FSMContext):
     await state.finish()
 
 
-async def get_answer(callback_query: types.CallbackQuery, callback_data: dict, state=FSMContext):
+async def get_answer(callback_query: types.CallbackQuery, callback_data: dict, state: FSMContext):
     user_id = callback_data['user_id']
 
     await state.update_data(id=user_id)
@@ -61,7 +61,7 @@ async def get_answer(callback_query: types.CallbackQuery, callback_data: dict, s
     await state.set_state(ReportAnswer.send_answer.state)
 
 
-async def send_answer(message: types.Message, state=FSMContext):
+async def send_answer(message: types.Message, state: FSMContext):
     data = await state.get_data()
     user_id = data['id']
     message_id = data['message_id']

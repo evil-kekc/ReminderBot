@@ -29,7 +29,7 @@ class SQLiteDB:
                                 "text TEXT)")
 
     def _check_duplicates(self, value: tuple):
-        """
+        """Checks for duplicate users
 
         :param value:
         :return:
@@ -38,13 +38,12 @@ class SQLiteDB:
             all_data = self.cursor.execute("SELECT user_id, name, date, text FROM users")
             for remind in all_data.fetchall():
                 if remind == value[1:]:
-                    print(remind)
                     return True
 
     def _get_formatted_json(self, users: Union[list, tuple]):
-        """Возвращает отформатированных пользователей
+        """Returns formatted users
 
-        :return:
+        :return: formatted users
         """
         all_posts = dict()
         for user in users:
@@ -81,7 +80,6 @@ class SQLiteDB:
                     self.cursor.execute(
                         "INSERT INTO users (id, user_id, name, date, text) VALUES (?, ?, ?, ?, ?)", value
                     )
-                    self.con.commit()
                     return True, 200, value
 
         except Exception as ex:
@@ -97,7 +95,6 @@ class SQLiteDB:
             with self.con:
                 all_data = self.cursor.execute("SELECT * FROM users")
                 all_posts = self._get_formatted_json(all_data.fetchall())
-                self.con.commit()
                 return all_posts, 200
         except Exception as ex:
             logging.error(f'{repr(ex)}')
@@ -111,7 +108,6 @@ class SQLiteDB:
         with self.con:
             for _id in all_id:
                 self.cursor.execute('DELETE FROM users WHERE id = ?', (_id,))
-                self.con.commit()
 
     def send_remind(self):
         """Send text remind from DB
@@ -135,7 +131,6 @@ class SQLiteDB:
                     name = value[2]
                     text = value[-1]
                     yield user_id, name, text
-                self.con.commit()
             else:
                 return
 
@@ -147,7 +142,6 @@ class SQLiteDB:
         with self.con:
             try:
                 self.cursor.execute('DELETE FROM users')
-                self.con.commit()
                 return 'All values removed', 200
             except Exception as ex:
                 logging.error(f'{repr(ex)}')
