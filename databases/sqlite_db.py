@@ -81,6 +81,8 @@ class SQLiteDB:
                         "INSERT INTO users (id, user_id, name, date, text) VALUES (?, ?, ?, ?, ?)", value
                     )
                     return True, 200, value
+            else:
+                return False, 404, value
 
         except Exception as ex:
             logging.error(f'{repr(ex)}')
