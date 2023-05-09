@@ -4,14 +4,15 @@ import uuid
 from datetime import datetime, timedelta
 from typing import Union
 
+from bot_config import BASE_DIR
 from config import load_config
 
-config = load_config(r'config/config.ini')
+config = load_config(fr'{BASE_DIR}/config/config.ini')
 
 
 class SQLiteDB:
     def __init__(self):
-        self.con = sqlite3.connect(r'databases/users.db')
+        self.con = sqlite3.connect(r'users.db', check_same_thread=False)
         self.cursor = self.con.cursor()
         self._create_table_users()
 

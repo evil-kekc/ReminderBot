@@ -5,9 +5,10 @@ from datetime import datetime, timedelta
 import pymongo
 from pymongo.errors import DuplicateKeyError
 
+from bot_config import BASE_DIR
 from config import load_config
 
-config = load_config(r'config/config.ini')
+config = load_config(fr'{BASE_DIR}config/config.ini')
 
 
 class MongoDB:
